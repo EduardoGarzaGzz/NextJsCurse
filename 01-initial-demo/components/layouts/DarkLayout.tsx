@@ -1,4 +1,6 @@
-export const DarkLayout = ( { children } ) => {
+import { FC } from 'react';
+
+export const DarkLayout: FC = ( { children } ) => {
     return (
         <div style={ {
             background  : 'rgba(0,0,0,0.3)',
@@ -7,5 +9,5 @@ export const DarkLayout = ( { children } ) => {
         } }>
             { children }
         </div>
-    )
-}
+    );
+};
