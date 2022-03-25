@@ -1,12 +1,12 @@
-import styles         from "./Navbar.module.css";
-import { ActiveLink } from "./ActiveLink";
+import { ActiveLink } from './ActiveLink';
+import styles         from './Navbar.module.css';
 
 const menuItem = [
     { text: 'Home', path: '/' },
     { text: 'About', path: '/about' },
     { text: 'Contact', path: '/contact' },
-    { text: 'Pricing', path: '/pricing' },
-]
+    { text: 'Pricing', path: '/pricing' }
+];
 
 export const Navbar = () => {
     return (
