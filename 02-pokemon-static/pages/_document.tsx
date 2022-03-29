@@ -15,7 +15,6 @@ class CustomDocument extends Document {
 		return (
 			<Html lang={ 'es-MX' }>
 				<Head>
-					<title>Pokemon Static</title>
 					{ CssBaseline.flush() }
 				</Head>
 				<body>
