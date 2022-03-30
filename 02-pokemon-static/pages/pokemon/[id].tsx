@@ -1,18 +1,25 @@
-import { Button, Card, Container, Grid, Image, Text }                                   from '@nextui-org/react'
-import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext } from 'next'
-import { FC }                                                                           from 'react'
-import { pokeApi }                                                                      from '../../api'
-import { Layout }                                                                       from '../../components/layouts'
-import { PokemonFull }                                                                  from '../../interfaces'
+import { Button, Card, Container, Grid, Image, Text }                                             from '@nextui-org/react'
+import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsContext, NextPage } from 'next'
+import { useState }                                                                               from 'react'
+import { pokeApi }                                                                                from '../../api'
+import { Layout }                                                                                 from '../../components/layouts'
+import { PokemonFull }                                                                            from '../../interfaces'
+import { localFavorites }                                                                         from '../../utils'
 
 interface Props {
 	pokemon: PokemonFull
 }
 
-const PokemonPage: FC<Props> = ( { pokemon } ) => {
+const PokemonPage: NextPage<Props> = ( { pokemon } ) => {
+	const [ isInFavorites, setIsFavorites ] = useState( localFavorites.isExistInFavorites( pokemon.id ) )
+
+	const onToggleFavorite = () => {
+		localFavorites.toggleFavorite( pokemon.id )
+		setIsFavorites( !isInFavorites )
+	}
 
 	return (
-		<Layout title={ 'Algun pokemon' }>
+		<Layout title={ pokemon.name }>
 			<Grid.Container gap={ 2 } css={ {
 				marginTop: '5px'
 			} }>
@@ -35,7 +42,9 @@ const PokemonPage: FC<Props> = ( { pokemon } ) => {
 							justifyContent: 'space-between'
 						} }>
 							<Text h1 transform={ 'capitalize' }>{ pokemon.name }</Text>
-							<Button color={ 'gradient' }>Guardar en favoritos</Button>
+							<Button color={ 'gradient' } ghost={ !isInFavorites } onClick={ onToggleFavorite }>
+								{ isInFavorites ? 'En Favoritos' : 'Guardar en favoritos' }
+							</Button>
 						</Card.Header>
 						<Card.Body>
 							<Text size={ 30 }>Sprites:</Text>
