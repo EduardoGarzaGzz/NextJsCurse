@@ -4,15 +4,14 @@ import { GetStaticPaths, GetStaticPathsContext, GetStaticProps, GetStaticPropsCo
 import { useState }                                                                               from 'react'
 import { pokeApi }                                                                                from '../../api'
 import { Layout }                                                                                 from '../../components/layouts'
-import { PokemonFull }                                                                            from '../../interfaces'
+import { PokemonFull, PokemonListResponse }                                                       from '../../interfaces'
 import { localFavorites }                                                                         from '../../utils'
-
 
 interface Props {
 	pokemon: PokemonFull
 }
 
-const PokemonPage: NextPage<Props> = ( { pokemon } ) => {
+const PokemonByNamePage: NextPage<Props> = ( { pokemon } ) => {
 	const [ isInFavorites, setIsFavorites ] = useState( localFavorites.isExistInFavorites( pokemon.id ) )
 
 	const onToggleFavorite = () => {
@@ -98,19 +97,20 @@ const PokemonPage: NextPage<Props> = ( { pokemon } ) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async ( ctx: GetStaticPathsContext ) => {
-	const pokemons151 = [ ...Array( 151 ) ].map( ( _, idx ) => `${ idx + 1 }` )
+	const { data }               = await pokeApi.get<PokemonListResponse>( `/pokemon?limit=151` )
+	const pokemonsName: string[] = data.results.map( ( { name } ) => name )
 
 	return {
-		paths   : pokemons151.map( id => ( {
-			params: { id }
+		paths   : pokemonsName.map( name => ( {
+			params: { name }
 		} ) ),
 		fallback: false
 	}
 }
 
 export const getStaticProps: GetStaticProps = async ( { params }: GetStaticPropsContext ) => {
-	const { id }   = params as { id: string }
-	const { data } = await pokeApi.get<PokemonFull>( `/pokemon/${ id }` )
+	const { name } = params as { name: string }
+	const { data } = await pokeApi.get<PokemonFull>( `/pokemon/${ name }` )
 	const pokemon  = {
 		id     : data.id,
 		name   : data.name,
@@ -124,4 +124,4 @@ export const getStaticProps: GetStaticProps = async ( { params }: GetStaticProps
 	}
 }
 
-export default PokemonPage
+export default PokemonByNamePage
