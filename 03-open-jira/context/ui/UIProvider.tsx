@@ -15,7 +15,9 @@ export const UIProvider: FC = ( { children } ) => {
 
 	return (
 		<UIContext.Provider value={ {
-			sideMenuOpen: false
+			...state,
+			openSideMenu : () => dispatch( { type: 'UI - Open Sidebar' } ),
+			closeSideMenu: () => dispatch( { type: 'UI - Close Sidebar' } )
 		} }>
 			{ children }
 		</UIContext.Provider>
