@@ -11,19 +11,19 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 	entries: [
 		{
 			_id        : uuidv4(),
-			description: 'Going to the afterworld doesn’t meet moonlight anymore than knowing creates outer tantra.Pol, a bene calcaria',
+			description: 'Pendiente: Going to the afterworld doesn’t meet moonlight anymore than knowing creates outer tantra.Pol, a bene calcaria',
 			status     : 'pending',
 			createAt   : Date.now()
 		},
 		{
 			_id        : uuidv4(),
-			description: 'Going to the afterworld doesn’t meet moonlight anymore than knowing creates outer tantra.Pol, a bene calcaria',
+			description: 'En progreso: Going to the afterworld doesn’t meet moonlight anymore than knowing creates outer tantra.Pol, a bene calcaria',
 			status     : 'in-progress',
 			createAt   : Date.now() - 1000000
 		},
 		{
 			_id        : uuidv4(),
-			description: 'Going to the afterworld doesn’t meet moonlight anymore than knowing creates outer tantra.Pol, a bene calcaria',
+			description: 'Finalizado: Going to the afterworld doesn’t meet moonlight anymore than knowing creates outer tantra.Pol, a bene calcaria',
 			status     : 'finished',
 			createAt   : Date.now() - 152000
 		}
