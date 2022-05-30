@@ -20,7 +20,7 @@ export const Sidebar: FC = ( {} ) => {
 				<List>
 					{
 						menuItem.map( ( txt, idx ) => (
-							<ListItem>
+							<ListItem key={ idx }>
 								<ListItemIcon>
 									{ idx % 2 ? <InboxOutlinedIcon /> : <EmailOutlinedIcon /> }
 								</ListItemIcon>
@@ -33,7 +33,7 @@ export const Sidebar: FC = ( {} ) => {
 				<List>
 					{
 						menuItem.map( ( txt, idx ) => (
-							<ListItem>
+							<ListItem key={ idx }>
 								<ListItemIcon>
 									{ idx % 2 ? <InboxOutlinedIcon /> : <EmailOutlinedIcon /> }
 								</ListItemIcon>
