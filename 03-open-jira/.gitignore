@@ -400,3 +400,7 @@ FodyWeavers.xsd
 .idea/
 .idea/**
 .idea/**
+
+mongo
+/mongo
+mongo/**
