@@ -2,6 +2,8 @@ import { FC, useEffect, useReducer } from 'react'
 import { Entry } from '../../interfaces'
 import { EntriesContext, entriesReducer } from './'
 import entriesApi from "../../apis/entriesApi";
+import { useSnackbar } from "notistack";
+import { useRouter } from "next/router";
 
 export interface EntriesState {
 	entries: Entry[]
@@ -13,6 +15,8 @@ const ENTRIES_INITIAL_STATE: EntriesState = {
 
 export const EntriesProvider: FC = ( { children } ) => {
 	const [ state, dispatch ] = useReducer( entriesReducer, ENTRIES_INITIAL_STATE )
+	const { enqueueSnackbar } = useSnackbar()
+	const router = useRouter()
 
 	const addNewEntry = async ( description: string ) => {
 		const { data } = await entriesApi.post<Entry>( '/entries', {
@@ -21,10 +25,20 @@ export const EntriesProvider: FC = ( { children } ) => {
 		dispatch( { type: '[Entry] Add-Entry', payload: data } )
 	}
 
-	const updateEntry = async ( { _id, description, status }: Entry ) => {
+	const updateEntry = async ( { _id, description, status }: Entry, showSnackbar = false ) => {
 		try {
 			const { data } = await entriesApi.put<Entry>( `entries/${ _id }`, { description, status } )
 			dispatch( { type: '[Entry] Entry-Update', payload: data } )
+
+			if ( showSnackbar )
+				enqueueSnackbar( 'Entrada actualizada', {
+					variant: 'success',
+					autoHideDuration: 1500,
+					anchorOrigin: {
+						vertical: 'top',
+						horizontal: 'right'
+					}
+				} )
 		} catch ( error ) {
 			console.log( { error } )
 		}
@@ -35,6 +49,21 @@ export const EntriesProvider: FC = ( { children } ) => {
 		dispatch( { type: '[Entry] Refresh-Data', payload: data } )
 	}
 
+	const deleteEntry = async ( _id: string ): Promise<void> => {
+		const { data } = await entriesApi.delete( `entries/${ _id }` )
+		dispatch( { type: '[Entry] Entry-Delete', payload: data } )
+		router.push( '/' ).catch()
+
+		enqueueSnackbar( 'Entrada eliminada', {
+			variant: 'warning',
+			autoHideDuration: 1500,
+			anchorOrigin: {
+				vertical: 'top',
+				horizontal: 'right'
+			}
+		} )
+	}
+
 	useEffect( () => {
 		refreshEntries().finally()
 	}, [] )
@@ -43,7 +72,8 @@ export const EntriesProvider: FC = ( { children } ) => {
 		<EntriesContext.Provider value={ {
 			...state,
 			addNewEntry,
-			updateEntry
+			updateEntry,
+			deleteEntry
 		} }>
 			{ children }
 		</EntriesContext.Provider>

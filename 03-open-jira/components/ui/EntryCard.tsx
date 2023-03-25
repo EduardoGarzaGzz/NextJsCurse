@@ -2,6 +2,8 @@ import { Card, CardActions, CardContent, CircularProgress, Typography } from '@m
 import { DragEvent, FC, useContext } from 'react'
 import { UIContext } from '../../context/ui'
 import { Entry } from '../../interfaces'
+import { useRouter } from "next/router";
+import { dateFunctions } from '../../utils'
 
 interface Props {
 	entry: Entry
@@ -9,6 +11,7 @@ interface Props {
 
 export const EntryCard: FC<Props> = ( { entry } ) => {
 	const { startDragging, endDragging } = useContext( UIContext )
+	const router = useRouter()
 
 	const onDragStart = ( event: DragEvent ) => {
 		event.dataTransfer.setData( 'text', entry._id )
@@ -19,14 +22,22 @@ export const EntryCard: FC<Props> = ( { entry } ) => {
 		endDragging()
 	}
 
+	const onClick = () => {
+		router.push( `/entries/${ entry._id }` ).catch()
+	}
+
 	return (
-		<Card sx={ { marginBottom: 1 } } draggable={ true } onDragStart={ onDragStart }>
+		<Card sx={ { marginBottom: 1 } }
+			  draggable={ true }
+			  onClick={ onClick }
+			  onDragStart={ onDragStart }>
 			<CardContent>
 				<Typography sx={ { whiteSpace: 'pre-line' } }>{ entry.description }</Typography>
 			</CardContent>
 			<CardActions sx={ { display: 'flex', justifyContent: 'end', paddingRight: 2 } }>
 				<Typography variant={ 'body2' }>
-					hace 30 minutos { ( false ) ? <CircularProgress size={ 10 }/> : '' }
+					{ dateFunctions.getFormatDistanceToNow( entry.createAt ) } { ( false ) ?
+					<CircularProgress size={ 10 }/> : '' }
 				</Typography>
 			</CardActions>
 		</Card>

@@ -4,6 +4,7 @@ import { db } from '../../../database'
 import mongoose from "mongoose";
 
 type Data = { message: string }
+	| string
 	| IEntry
 	| IEntry[]
 
@@ -54,6 +55,22 @@ const updateEntry = async ( req: NextApiRequest, res: NextApiResponse<Data> ) =>
 	}
 }
 
+const deleteEntry = async ( req: NextApiRequest, res: NextApiResponse<Data> ) => {
+	await db.connect()
+
+	const { id } = req.query
+	const entry = await Entry.findById( id )
+
+	if ( !entry ) {
+		await db.disconnect()
+		return res.status( 400 ).json( { message: 'No hay entrada con ese id: ' + id } )
+	}
+
+	await entry.deleteOne()
+	await db.disconnect()
+	return res.status( 200 ).json( entry!._id )
+}
+
 export default function handler( req: NextApiRequest, res: NextApiResponse<Data> ) {
 	const { id } = req.query
 
@@ -65,6 +82,8 @@ export default function handler( req: NextApiRequest, res: NextApiResponse<Data>
 			return getOne( req, res )
 		case 'PUT':
 			return updateEntry( req, res )
+		case 'DELETE':
+			return deleteEntry( req, res )
 		default:
 			return res.status( 400 ).json( { message: 'Metodo no existe' } )
 	}

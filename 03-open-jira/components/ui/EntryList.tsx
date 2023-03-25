@@ -1,10 +1,10 @@
-import { List, Paper }                        from '@mui/material'
+import { List, Paper } from '@mui/material'
 import { DragEvent, FC, useContext, useMemo } from 'react'
-import { EntriesContext }                     from '../../context/entries'
-import { UIContext }                          from '../../context/ui'
-import { EntryStatus }                        from '../../interfaces'
-import { EntryCard }                          from './EntryCard'
-import styles                                 from './EntryList.module.css'
+import { EntriesContext } from '../../context/entries'
+import { UIContext } from '../../context/ui'
+import { EntryStatus } from '../../interfaces'
+import { EntryCard } from './EntryCard'
+import styles from './EntryList.module.css'
 
 interface Props {
 	status: EntryStatus
@@ -22,7 +22,7 @@ export const EntryList: FC<Props> = ( { status } ) => {
 		const entry  = entries.find( e => e._id === id )!
 		entry.status = status
 
-		updateEntry( entry )
+		updateEntry( entry, true )
 		endDragging()
 	}
 

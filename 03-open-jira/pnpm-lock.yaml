@@ -10,10 +10,12 @@ specifiers:
   '@types/react-dom': 17.0.14
   '@types/uuid': ^8.3.4
   axios: ^1.3.4
+  date-fns: ^2.29.3
   eslint: 8.12.0
   eslint-config-next: 12.1.4
   mongoose: ^7.0.2
   next: 13.2.4
+  notistack: ^3.0.1
   react: 18.0.0
   react-dom: 18.0.0
   typescript: 4.6.3
@@ -25,8 +27,10 @@ dependencies:
   '@mui/icons-material': 5.11.11_4gsxgx4a7arsi2r2clbqoo6xwe
   '@mui/material': 5.11.13_dzmzverql7dimokwwrsiduon3i
   axios: 1.3.4
+  date-fns: 2.29.3
   mongoose: 7.0.2
   next: 13.2.4_zpnidt7m3osuk7shl3s4oenomq
+  notistack: 3.0.1_zpnidt7m3osuk7shl3s4oenomq
   react: 18.0.0
   react-dom: 18.0.0_react@18.0.0
   uuid: 8.3.2
@@ -955,6 +959,11 @@ packages:
     resolution: { integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA== }
     dev: true
 
+  /date-fns/2.29.3:
+    resolution: { integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA== }
+    engines: { node: '>=0.11' }
+    dev: false
+
   /debug/2.6.9:
     resolution: { integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA== }
     peerDependencies:
@@ -1586,6 +1595,12 @@ packages:
       slash: 3.0.0
     dev: true
 
+  /goober/2.1.12:
+    resolution: { integrity: sha512-yXHAvO08FU1JgTXX6Zn6sYCUFfB/OJSX8HHjDSgerZHZmFKAb08cykp5LBw5QnmyMcZyPRMqkdyHUSSzge788Q== }
+    peerDependencies:
+      csstype: ^3.0.10
+    dev: false
+
   /gopd/1.0.1:
     resolution: { integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA== }
     dependencies:
@@ -2049,6 +2064,21 @@ packages:
     transitivePeerDependencies:
       - '@babel/core'
       - babel-plugin-macros
+
+  /notistack/3.0.1_zpnidt7m3osuk7shl3s4oenomq:
+    resolution: { integrity: sha512-ntVZXXgSQH5WYfyU+3HfcXuKaapzAJ8fBLQ/G618rn3yvSzEbnOB8ZSOwhX+dAORy/lw+GC2N061JA0+gYWTVA== }
+    engines: { node: '>=12.0.0', npm: '>=6.0.0' }
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      clsx: 1.2.1
+      goober: 2.1.12
+      react: 18.0.0
+      react-dom: 18.0.0_react@18.0.0
+    transitivePeerDependencies:
+      - csstype
+    dev: false
 
   /object-assign/4.1.1:
     resolution: { integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg== }
