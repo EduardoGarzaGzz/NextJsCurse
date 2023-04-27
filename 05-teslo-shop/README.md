@@ -1,6 +1,18 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped
 with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+# Next.js Teslo Shop App
+
+Para correr localmente, se necesita la base de datos
+
+```
+docker-compose up
+```
+
+## Env
+
+Renombrar y cambiar el archivo __.env.template__ a __.env__
+
 ## Getting Started
 
 First, run the development server:
@@ -9,8 +21,6 @@ First, run the development server:
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -23,9 +33,6 @@ in `pages/api/hello.ts`.
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated
 as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and
-load Inter, a custom Google Font.
 
 ## Learn More
 
