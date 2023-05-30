@@ -1,18 +1,19 @@
 import React, { FC } from "react";
 import { ShopLayout } from "@/components/layouts";
-import { initialData } from "@/database/products";
 import { Box, Button, Chip, Grid, Typography } from "@mui/material";
 import ProductSlideshow from "@/components/products/ProductSlideshow";
 import ItemCounter from "@/components/ui/ItemCounter";
 import SizeSelector from "@/components/products/SizeSelector";
-
-const product = initialData.products[ 0 ]
+import { IProduct } from "@/interfaces";
+import { dbProducts } from "@/database";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 interface Props {
-	children: React.ReactNode
+	children?: React.ReactNode
+	product: IProduct
 }
 
-const ProductDetail: FC<Props> = ( {} ) => {
+const ProductDetail: FC<Props> = ( { product } ) => {
 	return (
 		<ShopLayout title={ product.title } pageDescription={ product.description }>
 			<Grid container spacing={ 3 }>
@@ -39,6 +40,37 @@ const ProductDetail: FC<Props> = ( {} ) => {
 			</Grid>
 		</ShopLayout>
 	)
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+	const productSlugs = await dbProducts.getAllProductsSlug()
+	const paths = productSlugs.map( ( { slug } ) => ( { params: { slug } } ) )
+
+	return {
+		paths,
+		fallback: 'blocking'
+	}
+}
+
+export const getStaticProps: GetStaticProps = async ( { params } ) => {
+	const { slug = '' } = params as { slug: string }
+	const product = await dbProducts.getProductBySlug( slug )
+
+	if ( !product ) {
+		return {
+			redirect: {
+				destination: '/',
+				permanent: false
+			}
+		}
+	}
+
+	return {
+		props: {
+			product: product
+		},
+		revalidate: 60 * 60 * 24
+	}
 }
 
 export default ProductDetail

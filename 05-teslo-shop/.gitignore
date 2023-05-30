@@ -38,3 +38,8 @@ next-env.d.ts
 
 .idea
 .idea/
+
+mongo
+mongo/*
+!/src/pages/_document.tsx
+!/src/pages/_app.tsx
